@@ -11,41 +11,6 @@ The project follows an **Environment-based Terraform architecture**, where separ
 
 Terraform modules are used to create reusable infrastructure components, while GitHub Actions automates the Terraform workflow.
 
----
-
-## 🏗️ Architecture
-
-```text
-                         Developer
-                             |
-                             | git push
-                             ↓
-                    ┌─────────────────┐
-                    │ GitHub Repository│
-                    └────────┬────────┘
-                             |
-                             ↓
-                    ┌─────────────────┐
-                    │ GitHub Actions   │
-                    │    Pipeline      │
-                    └────────┬────────┘
-                             |
-                  ┌──────────┴──────────┐
-                  ↓                     ↓
-              Terraform               Terraform
-                 Plan                   Apply
-                  |                     |
-                  └──────────┬──────────┘
-                             ↓
-                      Microsoft Azure
-                             |
-              ┌──────────────┼──────────────┐
-              ↓              ↓              ↓
-             VNet           NSG             VM
-````
-
----
-
 # 📂 Project Structure
 
 ```text
