@@ -1,5 +1,5 @@
-Yaml
-name: Terraform Azure Deployment
+# Yaml
+# name: Terraform Azure Deployment
 
 on:
   push:
