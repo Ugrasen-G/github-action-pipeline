@@ -17,14 +17,8 @@ stg = {
     location                 = "eastasia"
     account_tier             = "Standard"
     account_replication_type = "LRS"
-  }
-
-  storage2 = {
-    name                     = "krishn2027"
-    resource_group_name      = "kp2"
-    location                 = "eastasia"
-    account_tier             = "Standard"
-    account_replication_type = "LRS"
+    container_access_type = "private"
+    container_name = "container1"
   }
 }
 
