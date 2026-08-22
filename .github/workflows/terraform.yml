@@ -95,4 +95,8 @@ jobs:
         env:
          TF_LOG: INFO
 
+      - name: Terraform destroy
+        run: terraform destroy -input=false -auto-approve tfplan
+        env:
+         TF_LOG: INFO
 
