@@ -17,8 +17,8 @@ stg = {
     location                 = "eastasia"
     account_tier             = "Standard"
     account_replication_type = "LRS"
-    container_access_type = "private"
-    container_name = "container1"
+    container_access_type    = "private"
+    container_name           = "container1"
   }
 }
 
