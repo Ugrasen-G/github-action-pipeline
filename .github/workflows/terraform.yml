@@ -47,7 +47,7 @@ jobs:
         #      directory: .
         #      framework: terraform
         #      soft_fail: true
- terraform:
+  terraform:
     name: Terraform
     runs-on: ubuntu-latest
     defaults:
@@ -58,11 +58,11 @@ jobs:
 
       # 1. Checkout code
       - name: Checkout Code
-        uses: actions/checkout\@v4
+        uses: actions/checkout@v4
 
       # 2. Azure Login
       - name: Azure Login
-        uses: azure/login\@v2
+        uses: azure/login@v2
         with:
           client-id : "7ca4ffc0-f0d3-4549-a667-fec891af8a53"
           tenant-id: "79770134-1424-49a1-8c6f-62f3d6621777"
@@ -70,7 +70,7 @@ jobs:
 
       # 3. Setup Terraform
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform\@v3
+        uses: hashicorp/setup-terraform@v3
 
       # 4. Terraform Init
       - name: Terraform Init
@@ -86,11 +86,11 @@ jobs:
 
       # 7. Terraform Plan
       - name: Terraform Plan
-        run: terraform plan -no-color -input=false -var-file=terraform.tfvars
-        # working-directory: ${{ env.TF_WORKING_DIR }}
+        run: terraform plan -input=false -out=tfplan
+      
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve -input=false -var-file=terraform.tfvars
-        # working-directory: ${{ env.TF_WORKING_DIR }}
+        run: terraform apply -input=false -auto-approve tfplan
+        
 
 
