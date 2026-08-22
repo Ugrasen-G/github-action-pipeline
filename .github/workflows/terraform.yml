@@ -1,22 +1,53 @@
 # Yaml
-# name: Terraform Azure Deployment
+# name: Terraform Azure Infra Deployment
 
 on:
   push:
-    branches:
-      - main
+    branches: ["main"]
 
   pull_request:
-    branches:
-      - main
+    branches: ["main"]
 
 permissions:
   id-token: write
   contents: read
-
+  pull-requests: write
 jobs:
+  # lint-and-scan:
+  #   name: 'Lint and Security Scan'
+  #   runs-on: ubuntu-latest
+    # steps:
+    #   - name: Checkout
+    #     uses: actions/checkout@v4
 
-  terraform:
+    #   - name: Setup Terraform
+    #     uses: hashicorp/setup-terraform@v3
+
+    #   - name: Terraform Format Check
+    #     run: terraform fmt -check -recursive
+
+    #   - name: Setup TFLint
+    #     uses: terraform-linters/setup-tflint@v4
+    #     with:
+    #       tflint_version: latest
+
+        #  - name: Run TFLint
+        #    run: |
+        #      tflint --init
+        #      tflint -f compact
+
+        #  - name: Run tfsec
+        #    uses: aquasecurity/tfsec-action@v1.0.0
+        #    with:
+        #   working_directory: ${{ env.TF_WORKING_DIR }}
+
+        #  - name: Run Checkov
+        #    uses: bridgecrewio/checkov-action@master
+        #    with:
+        #      directory: .
+        #      framework: terraform
+        #      soft_fail: true
+ terraform:
     name: Terraform
     runs-on: ubuntu-latest
     defaults:
@@ -55,5 +86,11 @@ jobs:
 
       # 7. Terraform Plan
       - name: Terraform Plan
-        run: terraform plan
+        run: terraform plan -no-color -input=false -var-file=terraform.tfvars
+        # working-directory: ${{ env.TF_WORKING_DIR }}
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve -input=false -var-file=terraform.tfvars
+        # working-directory: ${{ env.TF_WORKING_DIR }}
+
 
