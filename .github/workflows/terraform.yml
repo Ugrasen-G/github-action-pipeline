@@ -87,10 +87,12 @@ jobs:
       # 7. Terraform Plan
       - name: Terraform Plan
         run: terraform plan -input=false -out=tfplan
-      
+        env:
+         TF_LOG: DEBUG
 
       - name: Terraform Apply
         run: terraform apply -input=false -auto-approve tfplan
-        
+        env:
+         TF_LOG: DEBUG
 
 
