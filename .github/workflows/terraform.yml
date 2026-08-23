@@ -85,14 +85,23 @@ jobs:
         run: terraform validate
 
       # 7. Terraform Plan
-      - name: Terraform Plan
-        run: terraform plan -input=false -out=tfplan
+      # - name: Terraform Plan
+      #   run: terraform plan -input=false -out=tfplan
+      #   env:
+      #    TF_LOG: INFO
+
+      # - name: Terraform Apply
+      #   run: terraform apply -input=false -auto-approve tfplan
+      #   env:
+      #    TF_LOG: INFO
+      
+      - name: Terraform Destroy Plan
+        run: terraform plan -destroy -input=false -out=tfplan-destroy
         env:
          TF_LOG: INFO
 
-      - name: Terraform Apply
-        run: terraform apply -input=false -auto-approve tfplan
+      - name: Terraform Destroy
+        run: terraform apply -input=false -auto-approve tfplan-destroy
         env:
-         TF_LOG: INFO
-
+          TF_LOG: INFO   
 
