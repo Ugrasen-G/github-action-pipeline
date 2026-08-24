@@ -58,7 +58,7 @@ module "azurerm_public_ip" {
 }
 
 module "azurerm_linux_virtual_machine" {
-  depends_on  = [module.azurerm_subnet]
+  depends_on  = [module.azurerm_key_vault, module.azurerm_subnet]
   source      = "../../modules/azurerm_linux_virtual_machine"
   linuxvm     = var.linuxvm
   vm_password = var.vm_password
