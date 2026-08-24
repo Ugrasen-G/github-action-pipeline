@@ -167,6 +167,7 @@ keyvault = {
     name                = "keyvault1"
     location            = "eastasia"
     resource_group_name = "kp2"
+    sku_name = "standard"
   }
 }
 
