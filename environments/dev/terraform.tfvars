@@ -190,7 +190,7 @@ linuxvm = {
     size                 = "Standard_D2_v3"
     admin_username       = "devopsadmin"
     key_name             = "vault1"
-    vault_name           = "vault1"
+    vault_name           = "vault2"
   }
 
   vm2 = {
@@ -201,8 +201,8 @@ linuxvm = {
     virtual_network_name = "vnet1234"
     size                 = "Standard_D2_v3"
     admin_username       = "devopsadmin"
-    key_name             = "vault2"
-    vault_name           = "vault2"
+    key_name             = "vault3"
+    vault_name           = "vault4"
   }
 }
 
