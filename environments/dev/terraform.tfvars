@@ -162,77 +162,82 @@ security_rules = {
   }
 }
 
-# keyvault = {
-#   vault1 = {
-#     name                = "keyvault1"
-#     location            = "eastasia"
-#     resource_group_name = "kp2"
-#   }
-# }
+keyvault = {
+  vault1 = {
+    name                = "keyvault1"
+    location            = "eastasia"
+    resource_group_name = "kp2"
+  }
+}
 
-# natgw = {
-#   natgw1 = {
-#     name                = "nat-gateway"
-#     location            = "eastasia"
-#     resource_group_name = "kp2"
-#   }
-# }
+natgw = {
+  natgw1 = {
+    name                = "nat-gateway"
+    location            = "eastasia"
+    resource_group_name = "kp2"
+  }
+}
 
-# vm_password = Admin@123456
+vm_password = Admin123456
 
-# linuxvm = {
-#   vm1 = {
-#     name                 = "frontend-vm1"
-#     nic_name             = "frontendvmnic"
-#     resource_group_name  = "kp2"
-#     location             = "eastasia"
-#     virtual_network_name = "vnet1234"
-#     size                 = "Standard_D2_v3"
-#     # admin_username       = "devopsadmin"
-#     admin_password       = "Devops@123456"
-#   }
-#   vm2 = {
-#     name                 = "frontend-vm2"
-#     nic_name             = "backendvmnic"
-#     resource_group_name  = "kp2"
-#     location             = "eastasia"
-#     virtual_network_name = "vnet1234"
-#     size                 = "Standard_D2_v3"
-#     # admin_username       = "devopsadmin"
-#     admin_password       = "Devops@123456"
-#   }
-# }
+linuxvm = {
+  vm1 = {
+    name                 = "frontend-vm1"
+    nic_name             = "frontendvmnic"
+    resource_group_name  = "kp2"
+    location             = "eastasia"
+    virtual_network_name = "vnet1234"
+    size                 = "Standard_D2_v3"
+    admin_username       = "devopsadmin"
+    key_name             = "vault1"
+    vault_name           = "vault1"
+    # admin_password       = "Devops@123456"
+  }
 
-# bastionpublicip = {
-#   publicip1 = {
-#     name                = "Bastionpublicip1"
-#     location            = "eastasia"
-#     resource_group_name = "kp2"
-#     allocation_method   = "Static"
-#   }
-#   publicip2 = {
-#     name                = "appgwpublicip1"
-#     location            = "eastasia"
-#     resource_group_name = "kp2"
-#     allocation_method   = "Static"
-#   }
-# }
+  vm2 = {
+    name                 = "frontend-vm2"
+    nic_name             = "backendvmnic"
+    resource_group_name  = "kp2"
+    location             = "eastasia"
+    virtual_network_name = "vnet1234"
+    size                 = "Standard_D2_v3"
+    admin_username       = "devopsadmin"
+    key_name             = "vault2"
+    vault_name           = "vault2"
+    # admin_password       = "Devops@123456"
+  }
+}
 
-# bastion_host = {
-#   bastion = {
-#     name                 = "firstbastion"
-#     location             = "eastasia"
-#     resource_group_name  = "kp2"
-#     virtual_network_name = "vnet1234"
-#   }
-# }
+bastionpublicip = {
+  publicip1 = {
+    name                = "Bastionpublicip1"
+    location            = "eastasia"
+    resource_group_name = "kp2"
+    allocation_method   = "Static"
+  }
+  publicip2 = {
+    name                = "appgwpublicip1"
+    location            = "eastasia"
+    resource_group_name = "kp2"
+    allocation_method   = "Static"
+  }
+}
 
-# appgw = {
-#   appgw1 = {
-#     name                 = "applicationgateway"
-#     location             = "eastasia"
-#     resource_group_name  = "kp2"
-#     virtual_network_name = "vnet1234"
-#     backend_ips          = ["10.1.1.4", "10.1.1.5"]
-#   }
-# }
+bastion_host = {
+  bastion = {
+    name                 = "firstbastion"
+    location             = "eastasia"
+    resource_group_name  = "kp2"
+    virtual_network_name = "vnet1234"
+  }
+}
+
+appgw = {
+  appgw1 = {
+    name                 = "applicationgateway"
+    location             = "eastasia"
+    resource_group_name  = "kp2"
+    virtual_network_name = "vnet1234"
+    backend_ips          = ["10.1.1.4", "10.1.1.5"]
+  }
+}
