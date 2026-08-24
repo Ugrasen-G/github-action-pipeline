@@ -178,7 +178,6 @@ natgw = {
   }
 }
 
-vm_password = Admin123456
 
 linuxvm = {
   vm1 = {
@@ -191,7 +190,6 @@ linuxvm = {
     admin_username       = "devopsadmin"
     key_name             = "vault1"
     vault_name           = "vault1"
-    # admin_password       = "Devops@123456"
   }
 
   vm2 = {
@@ -204,7 +202,6 @@ linuxvm = {
     admin_username       = "devopsadmin"
     key_name             = "vault2"
     vault_name           = "vault2"
-    # admin_password       = "Devops@123456"
   }
 }
 

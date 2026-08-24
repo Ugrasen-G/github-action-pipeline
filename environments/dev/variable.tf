@@ -11,5 +11,7 @@ variable "keyvault" {}
 variable "security_group" {}
 variable "security_rules" {}
 variable "vm_password" {
-  sensitive = true
+  description = "vm password"
+  type        = string
+  sensitive   = true
 }
