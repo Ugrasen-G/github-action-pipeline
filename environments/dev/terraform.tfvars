@@ -164,7 +164,7 @@ security_rules = {
 
 keyvault = {
   vault1 = {
-    name                = "keyvault1"
+    name                = "kp2026"
     location            = "eastasia"
     resource_group_name = "kp2"
     sku_name = "standard"
