@@ -34,7 +34,7 @@ module "azurerm_network_security_rules" {
 }
 
 module "azurerm_key_vault" {
-  depends_on = [module.azurerm_linux_virtual_machine]
+  depends_on = [module.azurerm_resource_group]
   source     = "../../modules/azurerm_key_vault"
   keyvault   = var.keyvault
 }
