@@ -1,5 +1,4 @@
-# Yaml
-# name: Terraform Azure Infra Deployment
+name: Terraform Azure Infra Deployment pipeline
 
 on:
   push:
