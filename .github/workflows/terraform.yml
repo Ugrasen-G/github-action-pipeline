@@ -70,7 +70,7 @@ jobs:
           client-id : ${{secrets.client-id}}
           tenant-id : ${{secrets.tenant-id}}
           subscription-id : ${{secrets.subscription-id}}
-
+          working-directory: ./environments/dev
       # 3. Setup Terraform
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
