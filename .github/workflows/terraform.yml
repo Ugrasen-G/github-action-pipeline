@@ -67,9 +67,9 @@ jobs:
           # client-id : "7ca4ffc0-f0d3-4549-a667-fec891af8a53"
           # tenant-id: "79770134-1424-49a1-8c6f-62f3d6621777"
           # subscription-id: "a954f93d-4fb9-4f5d-bd67-4d4dd65ad6d8"
-          client-id : ${{secrets.client-id}}
-          tenant-id : ${{secrets.tenant-id}}
-          subscription-id : ${{secrets.subscription-id}}
+          client-id : ${{SECRETS.client-id}}
+          tenant-id : ${{SECRETS.tenant-id}}
+          subscription-id : ${{SECRETS.subscription-id}}
           working-directory: ./environments/dev
       # 3. Setup Terraform
       - name: Setup Terraform
