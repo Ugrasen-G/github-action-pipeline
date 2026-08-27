@@ -190,7 +190,7 @@ linuxvm = {
     size                 = "Standard_D2_v3"
     admin_username       = "devopsadmin"
     key_name             = "vm1-password"
-    vault_name           = "vault2"
+    vault_name           = "kp2026"
   }
 
   vm2 = {
@@ -202,7 +202,7 @@ linuxvm = {
     size                 = "Standard_D2_v3"
     admin_username       = "devopsadmin"
     key_name             = "vm2-password"
-    vault_name           = "vault2"
+    vault_name           = "kp2026"
   }
 }
 
