@@ -202,7 +202,7 @@ linuxvm = {
     size                 = "Standard_D2_v3"
     admin_username       = "devopsadmin"
     key_name             = "vault1"
-    vault_name           = "vault2"
+    vault_name           = "vault3"
   }
 }
 
