@@ -65,12 +65,12 @@ security_group = {
     resource_group_name  = "kp2"
     virtual_network_name = "vnet123"
   }
-  securitygroup2 = {
-    name                 = "NSG2"
-    location             = "eastasia"
-    resource_group_name  = "kp2"
-    virtual_network_name = "vnet123"
-  }
+  # securitygroup2 = {
+  #   name                 = "NSG2"
+  #   location             = "eastasia"
+  #   resource_group_name  = "kp2"
+  #   virtual_network_name = "vnet123"
+  # }
 }
 
 security_rules = {
