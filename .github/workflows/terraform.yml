@@ -63,9 +63,6 @@ jobs:
       - name: Azure Login
         uses: azure/login@v2
         with:
-          #  client-id : "7ca4ffc0-f0d3-4549-a667-fec891af8a53"
-          #  tenant-id: "79770134-1424-49a1-8c6f-62f3d6621777"
-          #  subscription-id: "a954f93d-4fb9-4f5d-bd67-4d4dd65ad6d8"
            client-id: ${{ secrets.AZURE_CLIENT_ID }}
            tenant-id: ${{ secrets.AZURE_TENANT_ID }}
            subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
@@ -85,29 +82,29 @@ jobs:
         run: terraform validate
 
       # 7. Terraform Plan
-      # - name: Terraform Plan
-      #   run: terraform plan -input=false -out=tfplan
-      #   env:
-      #     TF_LOG: INFO  
-      #     TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}
+      - name: Terraform Plan
+        run: terraform plan -input=false -out=tfplan
+        env:
+          TF_LOG: INFO  
+          TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}
       
       # 8. Terraform apply
-      # - name: Terraform Apply
-      #   run: terraform apply -input=false -auto-approve tfplan
-      #   env:
-      #     TF_LOG: INFO  
-      #     TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}
-      
-      - name: Terraform Destroy Plan
-        run: terraform plan -destroy -input=false -out=tfplan-destroy
+      - name: Terraform Apply
+        run: terraform apply -input=false -auto-approve tfplan
         env:
-          TF_LOG: INFO
+          TF_LOG: INFO  
           TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}
+      
+      # - name: Terraform Destroy Plan
+      #   run: terraform plan -destroy -input=false -out=tfplan-destroy
+      #   env:
+      #     TF_LOG: INFO
+      #     TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}
 
-      - name: Terraform Destroy
-        run: terraform apply -input=false -auto-approve tfplan-destroy
-        env:
-          TF_LOG: INFO 
-          TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }} 
+      # - name: Terraform Destroy
+      #   run: terraform apply -input=false -auto-approve tfplan-destroy
+      #   env:
+      #     TF_LOG: INFO 
+      #     TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }} 
        
 
