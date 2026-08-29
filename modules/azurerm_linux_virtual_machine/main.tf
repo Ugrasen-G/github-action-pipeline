@@ -1,5 +1,10 @@
 variable "linuxvm" {}
-variable "vm_password" {}
+variable "vm_password" {
+  description = "vm password"
+  type        = string
+  sensitive   = true
+}
+
 
 
 
