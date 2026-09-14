@@ -12,40 +12,40 @@ permissions:
   contents: read
   pull-requests: write
 jobs:
-  # lint-and-scan:
-  #   name: 'Lint and Security Scan'
-  #   runs-on: ubuntu-latest
-    # steps:
-    #   - name: Checkout
-    #     uses: actions/checkout@v4
+  lint-and-scan:
+    name: 'Lint and Security Scan'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    #   - name: Setup Terraform
-    #     uses: hashicorp/setup-terraform@v3
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
 
-    #   - name: Terraform Format Check
-    #     run: terraform fmt -check -recursive
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive
 
-    #   - name: Setup TFLint
-    #     uses: terraform-linters/setup-tflint@v4
-    #     with:
-    #       tflint_version: latest
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v4
+        with:
+          tflint_version: latest
 
-        #  - name: Run TFLint
-        #    run: |
-        #      tflint --init
-        #      tflint -f compact
+      - name: Run TFLint
+        run: |
+         tflint --init
+             tflint -f compact
 
-        #  - name: Run tfsec
-        #    uses: aquasecurity/tfsec-action@v1.0.0
-        #    with:
-        #   working_directory: ${{ env.TF_WORKING_DIR }}
+         - name: Run tfsec
+           uses: aquasecurity/tfsec-action@v1.0.0
+           with:
+          working_directory: ${{ env.TF_WORKING_DIR }}
 
-        #  - name: Run Checkov
-        #    uses: bridgecrewio/checkov-action@master
-        #    with:
-        #      directory: .
-        #      framework: terraform
-        #      soft_fail: true
+         - name: Run Checkov
+           uses: bridgecrewio/checkov-action@master
+           with:
+             directory: .
+             framework: terraform
+             soft_fail: true
   terraform:
     name: Terraform
     runs-on: ubuntu-latest
