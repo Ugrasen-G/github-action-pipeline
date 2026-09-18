@@ -204,7 +204,20 @@ linuxvm = {
     key_name             = "vm2-password"
     vault_name           = "kp2026"
   }
+
+  vm3 = {
+    name                 = "frontend-vm3"
+    nic_name             = "backendvmnic3"
+    resource_group_name  = "kp2"
+    location             = "eastasia"
+    virtual_network_name = "vnet1234"
+    size                 = "Standard_B2ats_v2"
+    admin_username       = "devopsadmin"
+    key_name             = "vm2-password"
+    vault_name           = "kp2026"
+  }
 }
+
 
 bastionpublicip = {
   publicip1 = {
