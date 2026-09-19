@@ -51,18 +51,18 @@ module "azurerm_nat_gateway" {
 #   bastion_host = var.bastion_host
 # }
 
-# module "azurerm_public_ip" {
-#   depends_on      = [module.azurerm_subnet]
-#   source          = "../../modules/azurerm_public_ip"
-#   bastionpublicip = var.bastionpublicip
-# }
+module "azurerm_public_ip" {
+  depends_on      = [module.azurerm_subnet]
+  source          = "../../modules/azurerm_public_ip"
+  bastionpublicip = var.bastionpublicip
+}
 
-# module "azurerm_linux_virtual_machine" {
-#   depends_on  = [module.azurerm_key_vault, module.azurerm_public_ip]
-#   source      = "../../modules/azurerm_linux_virtual_machine"
-#   linuxvm     = var.linuxvm
-#   vm_password = var.vm_password
-# }
+module "azurerm_linux_virtual_machine" {
+  depends_on  = [module.azurerm_key_vault, module.azurerm_public_ip]
+  source      = "../../modules/azurerm_linux_virtual_machine"
+  linuxvm     = var.linuxvm
+  vm_password = var.vm_password
+}
 
 # module "azurerm_application_gateway" {
 #   depends_on = [module.azurerm_linux_virtual_machine]

@@ -90,23 +90,23 @@ jobs:
           TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}
       
       # 8. Terraform apply
-      # - name: Terraform Apply
-      #   run: terraform apply -input=false -auto-approve tfplan
-      #   env:
-      #     TF_LOG: INFO  
-      #     TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}
+      - name: Terraform Apply
+        run: terraform apply -input=false -auto-approve tfplan
+        env:
+          TF_LOG: INFO  
+          TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}
       
       #   # 9. Terraform Destroy Plan
-      - name: Terraform Destroy Plan
-        run: terraform plan -destroy -input=false -out=tfplan-destroy
-        env:
-          TF_LOG: INFO
-          TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}
+      # - name: Terraform Destroy Plan
+      #   run: terraform plan -destroy -input=false -out=tfplan-destroy
+      #   env:
+      #     TF_LOG: INFO
+      #     TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}
  
       #   # 10. Terraform Destroy
-      - name: Terraform Destroy
-        run: terraform apply -input=false -auto-approve tfplan-destroy
-        env:
-          TF_LOG: INFO 
-          TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }} 
+      # - name: Terraform Destroy
+      #   run: terraform apply -input=false -auto-approve tfplan-destroy
+      #   env:
+      #     TF_LOG: INFO 
+      #     TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }} 
      
