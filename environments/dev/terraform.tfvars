@@ -211,13 +211,13 @@ linuxvm = {
 
 bastionpublicip = {
   publicip1 = {
-    name                = "Bastionpublicip1"
+    name                = "Publicipvm1"
     location            = "eastasia"
     resource_group_name = "kp2"
     allocation_method   = "Static"
   }
   publicip2 = {
-    name                = "appgwpublicip1"
+    name                = "Publicipvm2"
     location            = "eastasia"
     resource_group_name = "kp2"
     allocation_method   = "Static"
