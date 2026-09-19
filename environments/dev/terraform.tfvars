@@ -167,7 +167,7 @@ keyvault = {
     name                = "kp2026"
     location            = "eastasia"
     resource_group_name = "kp2"
-    sku_name = "standard"
+    sku_name            = "standard"
   }
 }
 
@@ -184,6 +184,7 @@ linuxvm = {
   vm1 = {
     name                 = "frontend-vm1"
     nic_name             = "frontendvmnic"
+    publicip_name        = "Publicipvm1"
     resource_group_name  = "kp2"
     location             = "eastasia"
     virtual_network_name = "vnet1234"
@@ -196,6 +197,7 @@ linuxvm = {
   vm2 = {
     name                 = "frontend-vm2"
     nic_name             = "backendvmnic"
+    publicip_name        = "Publicipvm2"
     resource_group_name  = "kp2"
     location             = "eastasia"
     virtual_network_name = "vnet1234"
