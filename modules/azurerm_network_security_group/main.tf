@@ -23,8 +23,9 @@ data "azurerm_network_security_group" "security_group1" {
 }
 
 resource "azurerm_network_interface_security_group_association" "subnet_to_nsg" {
-  network_interface_id      = data.azurerm_subnet.frontend1_subnet["sub1"].id
-  network_security_group_id = data.azurerm_network_security_group.security_group1["securitygroup1"].id
+  for_each = var.security_group
+  network_interface_id      = data.azurerm_subnet.frontend1_subnet[each.key].id
+  network_security_group_id = data.azurerm_network_security_group.security_group1[each.key].id
 }
 
 
