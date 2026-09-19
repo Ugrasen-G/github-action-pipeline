@@ -57,12 +57,12 @@ module "azurerm_nat_gateway" {
 #   bastionpublicip = var.bastionpublicip
 # }
 
-module "azurerm_linux_virtual_machine" {
-  depends_on  = [module.azurerm_key_vault, module.azurerm_public_ip]
-  source      = "../../modules/azurerm_linux_virtual_machine"
-  linuxvm     = var.linuxvm
-  vm_password = var.vm_password
-}
+# module "azurerm_linux_virtual_machine" {
+#   depends_on  = [module.azurerm_key_vault, module.azurerm_public_ip]
+#   source      = "../../modules/azurerm_linux_virtual_machine"
+#   linuxvm     = var.linuxvm
+#   vm_password = var.vm_password
+# }
 
 # module "azurerm_application_gateway" {
 #   depends_on = [module.azurerm_linux_virtual_machine]
