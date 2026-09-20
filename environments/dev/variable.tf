@@ -9,6 +9,7 @@ variable "bastionpublicip" {}
 variable "appgw" {}
 variable "keyvault" {}
 variable "security_group" {}
+variable "security_group_association" {}
 variable "security_rules" {}
 variable "vm_password" {
   description = "vm password"

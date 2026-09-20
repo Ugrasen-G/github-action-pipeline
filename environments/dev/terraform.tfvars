@@ -63,14 +63,16 @@ security_group = {
     name                 = "NSG1"
     location             = "eastasia"
     resource_group_name  = "kp2"
+  }
+}
+
+security_group_association = {
+  subnet_to_nsg = {
+    name                = "NSG1"
+    subnet_name         = "frontend-subnet"
+    resource_group_name  = "kp2"
     virtual_network_name = "vnet1234"
   }
-  # securitygroup2 = {
-  #   name                 = "NSG2"
-  #   location             = "eastasia"
-  #   resource_group_name  = "kp2"
-  #   virtual_network_name = "vnet123"
-  # }
 }
 
 security_rules = {

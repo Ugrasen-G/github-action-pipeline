@@ -33,6 +33,12 @@ module "azurerm_network_security_rules" {
   security_rules = var.security_rules
 }
 
+module "azurerm_subnet_network_security_group_association" {
+  depends_on = [ module.azurerm_network_security_group ]
+  source = "../../modules/azurerm_security_group_association"
+security_group_association = var.security_group_association
+}
+
 module "azurerm_key_vault" {
   depends_on = [module.azurerm_resource_group]
   source     = "../../modules/azurerm_key_vault"
