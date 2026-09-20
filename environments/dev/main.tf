@@ -22,7 +22,7 @@ module "azurerm_subnet" {
 }
 
 module "azurerm_network_security_group" {
-  depends_on     = [module.azurerm_virtual_network]
+  depends_on     = [module.azurerm_subnet]
   source         = "../../modules/azurerm_network_security_group"
   security_group = var.security_group
 }
