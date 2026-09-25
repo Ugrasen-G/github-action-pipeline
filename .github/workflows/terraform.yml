@@ -140,7 +140,13 @@ jobs:
            tenant-id: ${{ secrets.AZURE_TENANT_ID }}
            subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}  
 
-      # 4. Terraform Plan
+      # 4. Terraform Init
+      - name: Terraform Init
+        run: terraform init
+        env:
+          TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}     
+
+      # 5. Terraform Plan
       - name: Terraform Plan
         run: terraform plan -input=false -out=tfplan
         env:
@@ -170,9 +176,15 @@ jobs:
         with:
            client-id: ${{ secrets.AZURE_CLIENT_ID }}
            tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}  
+           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
+           
+      # 4. Terraform Init
+      - name: Terraform Init
+        run: terraform init
+        env:
+          TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}     
 
-      # 4. Terraform apply
+      # 5. Terraform apply
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
         run: terraform apply -input=false -auto-approve tfplan
@@ -205,8 +217,14 @@ jobs:
            client-id: ${{ secrets.AZURE_CLIENT_ID }}
            tenant-id: ${{ secrets.AZURE_TENANT_ID }}
            subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}  
+
+      # 4. Terraform Init
+      - name: Terraform Init
+        run: terraform init
+        env:
+          TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}     
       
-      # 4. Terraform Destroy Plan
+      # 5. Terraform Destroy Plan
       - name: Terraform Destroy Plan
         if: github.ref == 'refs/heads/main'
         run: terraform plan -destroy -input=false -out=tfplan-destroy
@@ -238,8 +256,15 @@ jobs:
            client-id: ${{ secrets.AZURE_CLIENT_ID }}
            tenant-id: ${{ secrets.AZURE_TENANT_ID }}
            subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}  
+
+
+      # 4. Terraform Init
+      - name: Terraform Init
+        run: terraform init
+        env:
+          TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}     
  
-      # 4. Terraform Destroy
+      # 5. Terraform Destroy
       # - name: Terraform Destroy
       #   if: github.ref == 'refs/heads/main'
       #   run: terraform apply -input=false -auto-approve tfplan-destroy
