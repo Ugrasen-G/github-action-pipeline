@@ -60,15 +60,15 @@ jobs:
         run: | 
           docker build -t devops-test.
           
-      - name: Deploy Applicatiion
-        runs: |
-           echo "starting deployment..." 
-           docker run -d \
-             --name devops-test \
-             -p 8080:8000 \
-             devops-test
+      # - name: Deploy Applicatiion
+      #   run: |
+      #      echo "starting deployment..." 
+      #      docker run -d \
+      #        --name devops-test \
+      #        -p 8080:8000 \
+      #        devops-test
              
-            echo "Deployment command completed successfully" 
+      #       echo "Deployment command completed successfully" 
 
       - name: Deployment completed
         run: |
