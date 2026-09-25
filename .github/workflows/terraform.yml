@@ -18,35 +18,40 @@ permissions:
   id-token: write
   contents: read
   pull-requests: write
+  
 jobs:
   lint-and-scan:
     name: 'Lint and Security Scan'
     runs-on: ubuntu-latest
     steps:
+
+      # 1. checkout code
       - name: Checkout
         uses: actions/checkout@v4
 
+      # 2. Setup Terraform
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
-      # - name: Terraform Format Check
-      #   run: terraform fmt -check -recursive
-
+      # 3. Setup TfLint
       - name: Setup TFLint
         uses: terraform-linters/setup-tflint@v4
         with:
           tflint_version: latest
 
+      # 4. Run TFLint
       - name: Run TFLint
         run: |
          tflint --init
          tflint -f compact
 
+      # 5. Run tfsec
       - name: Run tfsec
         uses: aquasecurity/tfsec-action@v1.0.0
         with:
           working_directory: ${{ env.TF_WORKING_DIR }}
 
+      # 6. Run checkov
       - name: Run Checkov
         uses: bridgecrewio/checkov-action@master
         with:
@@ -54,8 +59,9 @@ jobs:
           framework: terraform
           soft_fail: true
 
-  terraform:
-    name: Terraform
+  azurerm-login:
+    name: Azure login
+    needs: lint-and-scan
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -74,10 +80,32 @@ jobs:
            client-id: ${{ secrets.AZURE_CLIENT_ID }}
            tenant-id: ${{ secrets.AZURE_TENANT_ID }}
            subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          
-      # 3. Setup Terraform
+
+  terraform-init:
+    name: Terraform Init and Validate
+    needs: azurerm-login
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./environments/dev
+
+    steps:
+
+      # 1. Checkout code
+      - name: Checkout Code
+        uses: actions/checkout@v4  
+
+      # 2. Setup Terraform
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
+
+      # 3. Azure Login
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+           client-id: ${{ secrets.AZURE_CLIENT_ID }}
+           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}  
 
       # 4. Terraform Init
       - name: Terraform Init
@@ -85,38 +113,168 @@ jobs:
         env:
           TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}
 
-      # 6. Terraform Validate
+      # 5. Terraform Validate
       - name: Terraform Validate
-        run: terraform validate
+        run: terraform validate   
 
-      # 7. Terraform Plan
+  terraform-plan:
+    name: Terraform Plan
+    needs: terraform-init
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./environments/dev
+
+    steps:
+
+      # 1. Checkout code
+      - name: Checkout Code
+        uses: actions/checkout@v4    
+
+        # 2. Setup Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3   
+        
+      # 3. Azure Login
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+           client-id: ${{ secrets.AZURE_CLIENT_ID }}
+           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}  
+
+      # 4. Terraform Init
+      - name: Terraform Init
+        run: terraform init
+        env:
+          TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}     
+
+      # 5. Terraform Plan
       - name: Terraform Plan
         run: terraform plan -input=false -out=tfplan
         env:
           TF_LOG: INFO  
           TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}
-      
-      # 8. Terraform apply
+
+  terraform-apply:
+    name: Terraform apply
+    needs: terraform-plan
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./environments/dev
+
+    steps:
+
+      # 1. Checkout code
+      - name: Checkout Code
+        uses: actions/checkout@v4    
+
+      # 2. Setup Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      # 3. Azure Login
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+           client-id: ${{ secrets.AZURE_CLIENT_ID }}
+           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
+           
+      # 4. Terraform Init
+      - name: Terraform Init
+        run: terraform init
+        env:
+          TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}     
+
+      # 5. Terraform apply
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
         run: terraform apply -input=false -auto-approve tfplan
         env:
           TF_LOG: INFO  
           TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}
+
+
+  terraform-destroy-plan:
+    name: Terraform Destroy Plan
+    needs: terraform-apply
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./environments/dev
+
+    steps:
+
+      # 1. Checkout code
+      - name: Checkout Code
+        uses: actions/checkout@v4    
+
+      # 2. Setup Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3  
+        
+      # 3. Azure Login
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+           client-id: ${{ secrets.AZURE_CLIENT_ID }}
+           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}  
+
+      # 4. Terraform Init
+      - name: Terraform Init
+        run: terraform init
+        env:
+          TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}     
       
-      #   # 9. Terraform Destroy Plan
+      # 5. Terraform Destroy Plan
       - name: Terraform Destroy Plan
         if: github.ref == 'refs/heads/main'
         run: terraform plan -destroy -input=false -out=tfplan-destroy
         env:
           TF_LOG: INFO
           TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}
- 
-      #   # 10. Terraform Destroy
-      - name: Terraform Destroy
-        if: github.ref == 'refs/heads/main'
-        run: terraform apply -input=false -auto-approve tfplan-destroy
+
+  terraform-destroy:
+    name: Terraform Destroy
+    needs: terraform-destroy-plan
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./environments/dev
+
+    steps:
+
+      # 1. Checkout code
+      - name: Checkout Code
+        uses: actions/checkout@v4    
+
+      # 2. Setup Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3  
+        
+      # 3. Azure Login
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+           client-id: ${{ secrets.AZURE_CLIENT_ID }}
+           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}  
+
+
+      # 4. Terraform Init
+      - name: Terraform Init
+        run: terraform init
         env:
-          TF_LOG: INFO 
-          TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }} 
+          TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}     
+ 
+      # 5. Terraform Destroy
+      # - name: Terraform Destroy
+      #   if: github.ref == 'refs/heads/main'
+      #   run: terraform apply -input=false -auto-approve tfplan-destroy
+      #   env:
+      #     TF_LOG: INFO 
+      #     TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }} 
      
