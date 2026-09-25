@@ -90,12 +90,12 @@ jobs:
           TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}
       
       # 8. Terraform apply
-      # - name: Terraform Apply
-      #   if: github.ref == 'refs/heads/main'
-      #   run: terraform apply -input=false -auto-approve tfplan
-      #   env:
-      #     TF_LOG: INFO  
-      #     TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main'
+        run: terraform apply -input=false -auto-approve tfplan
+        env:
+          TF_LOG: INFO  
+          TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}
       
       #   # 9. Terraform Destroy Plan
       # - name: Terraform Destroy Plan
