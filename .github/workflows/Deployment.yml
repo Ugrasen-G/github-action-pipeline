@@ -1,0 +1,76 @@
+name: Application Deployment pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - "feature/**"
+
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: action/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          docker build -t devops-test:${{}}
+          
+          
+      - name: Build successful
+        run: |
+          echo "Docker image built successfully"
+          
+  test:
+    name: Test
+    needs: build
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: Run application test
+        run: |
+          echo "Running tests..."
+          test-f app/app.py
+          echo "Application test passed"
+          
+  Deploy: 
+    name: Deploy
+    needs: 
+       - build
+       - test
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: Build deployment image
+        run: | 
+          docker build -t devops-test.
+          
+      - name: Deploy Applicatiion
+        runs: |
+           echo "starting deployment..." 
+           docker run -d \
+             --name devops-test \
+             -p 8080:8000 \
+             devops-test
+             
+            echo "Deployment command completed successfully" 
+
+      - name: Deployment completed
+        run: |
+          echo "Deployment successful"      
+    
