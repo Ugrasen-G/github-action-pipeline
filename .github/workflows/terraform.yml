@@ -1,14 +1,18 @@
 name: Terraform Azure Infra Deployment pipeline
 
+# on:
+#   push:
+#     branches: [ "feature/*" ]
+
+#   pull_request:
+#     branches: [ "main" ]
+
 on:
   push:
-    branches: 
-      - main
-      - feature/**
-
-  pull_request:
     branches:
       - main
+      - "feature/**"
+
 
 permissions:
   id-token: write
