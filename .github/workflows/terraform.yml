@@ -2,7 +2,7 @@ name: Terraform Azure Infra Deployment pipeline
 
 on:
   push:
-    branches: ["main"]
+    branches: ["feature/*"]
 
   pull_request:
     branches: ["main"]
@@ -91,22 +91,23 @@ jobs:
       
       # 8. Terraform apply
       # - name: Terraform Apply
+      #   if: github.ref == 'refs/heads/main'
       #   run: terraform apply -input=false -auto-approve tfplan
       #   env:
       #     TF_LOG: INFO  
       #     TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}
       
       #   # 9. Terraform Destroy Plan
-      - name: Terraform Destroy Plan
-        run: terraform plan -destroy -input=false -out=tfplan-destroy
-        env:
-          TF_LOG: INFO
-          TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}
+      # - name: Terraform Destroy Plan
+      #   run: terraform plan -destroy -input=false -out=tfplan-destroy
+      #   env:
+      #     TF_LOG: INFO
+      #     TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}
  
       #   # 10. Terraform Destroy
-      - name: Terraform Destroy
-        run: terraform apply -input=false -auto-approve tfplan-destroy
-        env:
-          TF_LOG: INFO 
-          TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }} 
+      # - name: Terraform Destroy
+      #   run: terraform apply -input=false -auto-approve tfplan-destroy
+      #   env:
+      #     TF_LOG: INFO 
+      #     TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }} 
      
