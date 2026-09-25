@@ -19,11 +19,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout code
-        uses: action/checkout@v4
+        uses: actions/checkout@v4
 
       - name: Build Docker image
         run: |
-          docker build -t devops-test:${{}}
+          docker build -t devops-test:${{secrets.Dockerfile}}
           
           
       - name: Build successful
@@ -45,7 +45,7 @@ jobs:
           test-f app/app.py
           echo "Application test passed"
           
-  Deploy: 
+  deploy: 
     name: Deploy
     needs: 
        - build
