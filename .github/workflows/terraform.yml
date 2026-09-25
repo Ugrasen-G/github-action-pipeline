@@ -59,28 +59,7 @@ jobs:
           framework: terraform
           soft_fail: true
 
-  # azurerm-login:
-  #   name: Azure login
-  #   needs: lint-and-scan
-  #   runs-on: ubuntu-latest
-  #   defaults:
-  #     run:
-  #       working-directory: ./environments/dev
-
-  #   steps:
-
-  #     # 1. Checkout code
-  #     - name: Checkout Code
-  #       uses: actions/checkout@v4
-
-  #     # 2. Azure Login
-  #     - name: Azure Login
-  #       uses: azure/login@v2
-  #       with:
-  #          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-  #          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-  #          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
+  
   terraform-init:
     name: Terraform Init and Validate
     needs: lint-and-scan
@@ -116,45 +95,7 @@ jobs:
       # 5. Terraform Validate
       - name: Terraform Validate
         run: terraform validate   
-
-  # terraform-plan:
-  #   name: Terraform Plan
-  #   needs: terraform-init
-  #   runs-on: ubuntu-latest
-  #   defaults:
-  #     run:
-  #       working-directory: ./environments/dev
-
-  #   steps:
-
-  #     # 1. Checkout code
-  #     - name: Checkout Code
-  #       uses: actions/checkout@v4    
-
-  #       # 2. Setup Terraform
-  #     - name: Setup Terraform
-  #       uses: hashicorp/setup-terraform@v3   
-        
-  #     # 3. Azure Login
-  #     - name: Azure Login
-  #       uses: azure/login@v2
-  #       with:
-  #          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-  #          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-  #          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}  
-
-  #     # 4. Terraform Init
-  #     - name: Terraform Init
-  #       run: terraform init
-  #       env:
-  #         TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}     
-
-  #     # 5. Terraform Plan
-  #     - name: Terraform Plan
-  #       run: terraform plan -input=false -out=tfplan
-  #       env:
-  #         TF_LOG: INFO  
-  #         TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}
+      
 
   terraform-apply:
     name: Terraform apply

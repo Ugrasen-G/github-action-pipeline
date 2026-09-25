@@ -1,10 +1,10 @@
 name: Application Deployment pipeline
 
-on:
-  push:
-    branches:
-      - main
-      - "feature/**"
+# on:
+#   push:
+#     branches:
+#       - main
+#       - "feature/**"
 
 
 permissions:
