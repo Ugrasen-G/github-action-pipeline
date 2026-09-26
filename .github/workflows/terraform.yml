@@ -138,6 +138,7 @@ jobs:
           
       # 5. Terraform Plan
       - name: Terraform Plan
+        if: github.ref == 'refs/heads/main'
         run: terraform plan -input=false -out=tfplan
         env:
           TF_LOG: INFO  
