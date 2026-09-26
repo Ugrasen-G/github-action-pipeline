@@ -60,8 +60,8 @@ jobs:
           soft_fail: true
 
   
-  terraform-init:
-    name: Terraform Init and Validate
+  terraform-init-plan:
+    name: Terraform Init and Validate and plan
     needs: lint-and-scan
     runs-on: ubuntu-latest
     defaults:
@@ -96,10 +96,17 @@ jobs:
       - name: Terraform Validate
         run: terraform validate   
       
+      # 6. Terraform Plan
+      - name: Terraform Plan
+        run: terraform plan -input=false -out=tfplan
+        env:
+          TF_LOG: INFO  
+          TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}    
+ 
 
   terraform-apply:
     name: Terraform apply
-    needs: terraform-init
+    needs: terraform-init-plan
     runs-on: ubuntu-latest
     defaults:
       run:
