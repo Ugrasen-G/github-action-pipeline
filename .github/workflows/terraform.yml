@@ -23,10 +23,7 @@ jobs:
   lint-and-scan:
     name: 'Lint and Security Scan'
     runs-on: ubuntu-latest
-    # defaults:
-    #   run:
-    #     working-directory: ./environments/dev
-
+    
         
     steps:
 
