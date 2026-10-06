@@ -6,11 +6,11 @@ variable "vm_password" {
 }
 
 
-data "azurerm_public_ip" "vmpublicip" {
-    for_each = var.linuxvm
-    name = each.value.publicip_name
-  resource_group_name = each.value.resource_group_name
-}
+# data "azurerm_public_ip" "vmpublicip" {
+#     for_each = var.linuxvm
+#     name = each.value.publicip_name
+#   resource_group_name = each.value.resource_group_name
+# }
 
 data "azurerm_subnet" "frontend_subnet" {
      for_each = var.linuxvm
@@ -24,6 +24,7 @@ data "azurerm_key_vault" "keyvault1" {
   name = each.value.vault_name
   resource_group_name = each.value.resource_group_name
 }
+
 resource "azurerm_key_vault_secret" "vm_password" {
   for_each = var.linuxvm
    name         = each.value.key_name
@@ -41,7 +42,7 @@ resource "azurerm_key_vault_secret" "vm_password" {
     name                          = "nic_frontend_vm"
     subnet_id                     = data.azurerm_subnet.frontend_subnet[each.key].id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id  = data.azurerm_public_ip.vmpublicip[each.key].id
+    # public_ip_address_id  = data.azurerm_public_ip.vmpublicip[each.key].id
   }
 }
 
