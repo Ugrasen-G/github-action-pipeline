@@ -1,4 +1,4 @@
-name: Terraform Azure Infra Deployment pipeline
+# name: Terraform Azure Infra Deployment pipeline
 
 # on:
 #   push:
