@@ -20,6 +20,9 @@ permissions:
   pull-requests: write
   
 jobs:
+  terraform:
+    environment: dev
+    
   lint-and-scan:
     name: 'Lint and Security Scan'
     runs-on: ubuntu-latest
