@@ -95,6 +95,10 @@ resource "azurerm_network_interface_application_gateway_backend_address_pool_ass
   depends_on = [ azurerm_application_gateway.appgw ]
   for_each = var.appgw
   network_interface_id    = azurerm_network_interface.nic[each.key].id
-  ip_configuration_name   = azurerm_network_interface.nic[each.key].ip_configuration[0].name
-  backend_address_pool_id = azurerm_application_gateway.appgw[each.key].backend_address_pool[0].id
+  ip_configuration_name   = "appgwnic"
+  backend_address_pool_id = one([
+    for pool in azurerm_application_gateway.appgw[each.key].backend_address_pool :
+    pool.id
+    if pool.name == "backendpool"
+  ])
 }
