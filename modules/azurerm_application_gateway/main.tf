@@ -20,6 +20,7 @@ data "azurerm_subnet" "appsubnet" {
 # } 
 
 resource "azurerm_application_gateway" "appgw" {
+  depends_on = [ azurerm_network_interface.nic ]
   for_each = var.appgw
   name                = each.value.name
   location            =  each.value.location
@@ -91,6 +92,7 @@ resource "azurerm_network_interface" "nic" {
 }
 
 resource "azurerm_network_interface_application_gateway_backend_address_pool_association" "nic-assoc" {
+  depends_on = [ azurerm_application_gateway.appgw ]
   for_each = var.appgw
   network_interface_id    = azurerm_network_interface.nic[each.key].id
   ip_configuration_name   = azurerm_network_interface.nic[each.key].ip_configuration[0].name

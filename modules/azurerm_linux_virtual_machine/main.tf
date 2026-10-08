@@ -56,7 +56,7 @@ resource "azurerm_key_vault_secret" "vm_password" {
   
 admin_username                  = each.value.admin_username
 # admin_password                  = each.value.admin_password
- admin_password = azurerm_key_vault_secret.vm_password[each.key].value
+admin_password = azurerm_key_vault_secret.vm_password[each.key].value
 disable_password_authentication = false
   
 os_disk {
