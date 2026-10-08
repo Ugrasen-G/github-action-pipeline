@@ -241,6 +241,6 @@ appgw = {
     location             = "eastasia"
     resource_group_name  = "kp2"
     virtual_network_name = "vnet1234"
-    appgw_nic_name        = [ "frontendvmnic","backendvmnic" ]
+    appgw_nic_name        = "appgateway_nic" 
   }
 }
