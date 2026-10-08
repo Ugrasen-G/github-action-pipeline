@@ -84,14 +84,14 @@ resource "azurerm_network_interface" "nic" {
   resource_group_name = each.value.resource_group_name
 
   ip_configuration {
-    name                          = appgwnic
+    name                          = "appgwnic"
     subnet_id                     = data.azurerm_subnet.appsubnet[each.key].id
     private_ip_address_allocation = "Dynamic"
   }
 }
 
 resource "azurerm_network_interface_application_gateway_backend_address_pool_association" "nic-assoc" {
- for_each = var.appgw
+  for_each = var.appgw
   network_interface_id    = azurerm_network_interface.nic[each.key].id
   ip_configuration_name   = azurerm_network_interface.nic[each.key].ip_configuration[0].name
   backend_address_pool_id = azurerm_application_gateway.appgw[each.key].backend_address_pool[0].id
