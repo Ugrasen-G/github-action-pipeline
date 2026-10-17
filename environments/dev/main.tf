@@ -22,7 +22,7 @@ module "azurerm_subnet" {
 }
 
 module "azurerm_network_security_group" {
-  depends_on     = [module.azurerm_subnet]
+  depends_on     = [module.azurerm_subnet, module.azurerm_network_interface]
   source         = "../../modules/azurerm_network_security_group"
   security_group = var.security_group
 }
@@ -33,11 +33,11 @@ module "azurerm_network_security_rules" {
   security_rules = var.security_rules
 }
 
-module "azurerm_subnet_network_security_group_association" {
-  depends_on = [ module.azurerm_network_security_group ]
-  source = "../../modules/azurerm_security_group_association"
-security_group_association = var.security_group_association
-}
+# module "azurerm_subnet_network_security_group_association" {
+#   depends_on = [ module.azurerm_network_security_group ]
+#   source = "../../modules/azurerm_security_group_association"
+# security_group_association = var.security_group_association
+# }
 
 module "azurerm_key_vault" {
   depends_on = [module.azurerm_resource_group]
@@ -63,8 +63,14 @@ module "azurerm_public_ip" {
   bastionpublicip = var.bastionpublicip
 }
 
+module "azurerm_network_interface" {
+  depends_on = [module.azurerm_subnet, module.azurerm_public_ip]
+  source     = "../../modules/azurerm_network_interface"
+  nic        = var.nic
+}
+
 module "azurerm_linux_virtual_machine" {
-  depends_on  = [module.azurerm_key_vault, module.azurerm_public_ip]
+  depends_on  = [module.azurerm_key_vault, module.azurerm_network_interface]
   source      = "../../modules/azurerm_linux_virtual_machine"
   linuxvm     = var.linuxvm
   vm_password = var.vm_password

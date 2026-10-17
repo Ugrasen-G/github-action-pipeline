@@ -12,12 +12,12 @@ variable "vm_password" {
 #   resource_group_name = each.value.resource_group_name
 # }
 
-data "azurerm_subnet" "frontend_subnet" {
-     for_each = var.linuxvm
-     name = "frontend-subnet"
-  virtual_network_name = each.value.virtual_network_name
-  resource_group_name = each.value.resource_group_name
-}
+# data "azurerm_subnet" "frontend_subnet" {
+#      for_each = var.linuxvm
+#      name = "frontend-subnet"
+#   virtual_network_name = each.value.virtual_network_name
+#   resource_group_name = each.value.resource_group_name
+# }
 
 data "azurerm_key_vault" "keyvault1" {
   for_each = var.linuxvm
@@ -32,18 +32,24 @@ resource "azurerm_key_vault_secret" "vm_password" {
    key_vault_id = data.azurerm_key_vault.keyvault1[each.key].id
  }
 
- resource "azurerm_network_interface" "nic" {
-  for_each            = var.linuxvm
-  name                = each.value.nic_name
-  location            = each.value.location
-  resource_group_name = each.value.resource_group_name
+#  resource "azurerm_network_interface" "nic" {
+#   for_each            = var.linuxvm
+#   name                = each.value.nic_name
+#   location            = each.value.location
+#   resource_group_name = each.value.resource_group_name
 
-  ip_configuration {
-    name                          = "nic_frontend_vm"
-    subnet_id                     = data.azurerm_subnet.frontend_subnet[each.key].id
-    private_ip_address_allocation = "Dynamic"
-    # public_ip_address_id  = data.azurerm_public_ip.vmpublicip[each.key].id
-  }
+#   ip_configuration {
+#     name                          = "nic_frontend_vm"
+#     subnet_id                     = data.azurerm_subnet.frontend_subnet[each.key].id
+#     private_ip_address_allocation = "Dynamic"
+#      public_ip_address_id  = data.azurerm_public_ip.vmpublicip[each.key].id
+#   }
+# }
+
+data "azurerm_network_interface" "nic" {
+  for_each = var.linuxvm
+  name                = each.value.nic_name
+  resource_group_name = each.value.resource_group_name
 }
 
  resource "azurerm_linux_virtual_machine" "firstvm" {
@@ -51,7 +57,7 @@ resource "azurerm_key_vault_secret" "vm_password" {
   name                  = each.value.name
   location              = each.value.location
   resource_group_name   = each.value.resource_group_name
-  network_interface_ids = [azurerm_network_interface.nic[each.key].id]
+  network_interface_ids = [data.azurerm_network_interface.nic[each.key].id]
   size                  = each.value.size
   
 admin_username                  = each.value.admin_username

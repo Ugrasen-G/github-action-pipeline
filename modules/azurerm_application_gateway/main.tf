@@ -13,14 +13,8 @@ data "azurerm_subnet" "appsubnet" {
   resource_group_name = each.value.resource_group_name
 }
 
-# data "azurerm_network_interface" "nic" {
-#  for_each = var.appgw
-#   name = each.value.nic_name
-#   resource_group_name = each.value.resource_group_name
-# } 
 
 resource "azurerm_application_gateway" "appgw" {
-  depends_on = [ azurerm_network_interface.nic ]
   for_each = var.appgw
   name                = each.value.name
   location            =  each.value.location
@@ -47,16 +41,9 @@ resource "azurerm_application_gateway" "appgw" {
     public_ip_address_id = data.azurerm_public_ip.appgwpublicip[each.key].id
   }
 
-# Key Vault certificate; use a versionless secret URI
-#  ssl_certificate {
-#     name                = "app-tls-cert"
-#     key_vault_secret_id = var.key_vault_certificate_secret_id
-#   }
-# VMSS will attach itself to this pool.
-# No backend IP addresses are hardcoded
   backend_address_pool {
     name = "frontend-subnet"
-    # ip_addresses = [azurerm_network_interface.nic[each.key].ip_configuration[0].private_ip_address]
+    ip_addresses = [azurerm_network_interface.nic[each.key].ip_configuration[0].private_ip_address]
 }
   
 
@@ -84,28 +71,3 @@ resource "azurerm_application_gateway" "appgw" {
     priority                   = 100
   }
 }
-
-# resource "azurerm_network_interface" "nic" {
-#   for_each = var.appgw
-#   name                = each.value.appgw_nic_name
-#   location            = each.value.location
-#   resource_group_name = each.value.resource_group_name
-
-#   ip_configuration {
-#     name                          = "appgwnic"
-#     subnet_id                     = data.azurerm_subnet.appsubnet[each.key].id
-#     private_ip_address_allocation = "Dynamic"
-#   }
-# }
-
-# resource "azurerm_network_interface_application_gateway_backend_address_pool_association" "nic-assoc" {
-#   depends_on = [ azurerm_application_gateway.appgw ]
-#   for_each = var.appgw
-#   network_interface_id    = azurerm_network_interface.nic[each.key].id
-#   ip_configuration_name   = "appgwnic"
-#   backend_address_pool_id = one([
-#     for pool in azurerm_application_gateway.appgw[each.key].backend_address_pool :
-#     pool.id
-#     if pool.name == "backendpool"
-#   ])
-# }

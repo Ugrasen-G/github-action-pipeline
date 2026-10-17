@@ -58,20 +58,13 @@ subnet = {
   }
 }
 
+
 security_group = {
   securitygroup1 = {
-    name                 = "NSG1"
-    location             = "eastasia"
-    resource_group_name  = "kp2"
-  }
-}
-
-security_group_association = {
-  subnet_to_nsg = {
     name                = "NSG1"
-    subnet_name         = "frontend-subnet"
-    resource_group_name  = "kp2"
-    virtual_network_name = "vnet1234"
+    location            = "eastasia"
+    resource_group_name = "kp2"
+    nic_name            = ["frontendvmnic", "backendvmnic"]
   }
 }
 
@@ -181,11 +174,30 @@ natgw = {
   }
 }
 
+nic = {
+  nic1 = {
+    name                 = "frontendvmnic"
+    resource_group_name  = "kp2"
+    location             = "eastasia"
+    virtual_network_name = "vnet1234"
+    subnet_name          = "frontend-subnet"
+
+  }
+  nic2 = {
+    name                 = "backendvmnic"
+    resource_group_name  = "kp2"
+    location             = "eastasia"
+    virtual_network_name = "vnet1234"
+    subnet_name          = "backend-subnet"
+  }
+}
+
+vm_password = "Admin@123456"
 
 linuxvm = {
   vm1 = {
-    name                 = "frontend-vm1"
-    nic_name             = "frontendvmnic"
+    name     = "frontend-vm1"
+    nic_name = "frontendvmnic"
     # publicip_name        = "Publicipvm1"
     resource_group_name  = "kp2"
     location             = "eastasia"
@@ -197,9 +209,9 @@ linuxvm = {
   }
 
   vm2 = {
-    name                 = "frontend-vm2"
-    nic_name             = "backendvmnic"
-    # publicip_name        = "Publicipvm2"
+    name     = "frontend-vm2"
+    nic_name = "backendvmnic"
+    # publicip_name  = "Publicipvm2"
     resource_group_name  = "kp2"
     location             = "eastasia"
     virtual_network_name = "vnet1234"
@@ -241,6 +253,6 @@ appgw = {
     location             = "eastasia"
     resource_group_name  = "kp2"
     virtual_network_name = "vnet1234"
-    appgw_nic_name        = "appgateway_nic" 
+    appgw_nic_name       = "appgateway_nic"
   }
 }
