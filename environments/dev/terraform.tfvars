@@ -160,11 +160,15 @@ security_rules = {
 keyvault = {
   vault1 = {
     name                = "kp2026"
+    key_username         = "vm-username"
+    key_password         = "vm-password"
     location            = "eastasia"
     resource_group_name = "kp2"
     sku_name            = "standard"
   }
 }
+vm_username = "devopsadmin"
+vm_password = "Admin@123456"
 
 natgw = {
   natgw1 = {
@@ -192,7 +196,7 @@ nic = {
   }
 }
 
-vm_password = "Admin@123456"
+
 
 linuxvm = {
   vm1 = {
@@ -204,7 +208,8 @@ linuxvm = {
     virtual_network_name = "vnet1234"
     size                 = "Standard_B2ats_v2"
     admin_username       = "devopsadmin"
-    key_name             = "vm1-password"
+    key_username         = "vm-username"
+    key_password         = "vm-password"
     vault_name           = "kp2026"
   }
 
@@ -217,7 +222,8 @@ linuxvm = {
     virtual_network_name = "vnet1234"
     size                 = "Standard_B2ats_v2"
     admin_username       = "devopsadmin"
-    key_name             = "vm2-password"
+    key_username         = "vm-username"
+    key_password         = "vm-password"
     vault_name           = "kp2026"
   }
 }

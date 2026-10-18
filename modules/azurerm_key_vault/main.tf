@@ -1,4 +1,15 @@
 variable "keyvault" {}
+variable "vm_username" {
+  description = "vm username"
+  type        = string
+  sensitive   = true
+}
+
+variable "vm_password" {
+  description = "vm password"
+  type        = string
+  sensitive   = true
+}
 
 data "azurerm_client_config" "current" {}
 
@@ -23,3 +34,17 @@ secret_permissions = ["Get", "List", "Set", "Delete", "Recover", "Purge"]
  storage_permissions =[ "Get", ]
   }
 }
+
+resource "azurerm_key_vault_secret" "username" {
+  for_each = var.keyvault
+   name         = each.value.key_username
+   value        = var.vm_username
+   key_vault_id = azurerm_key_vault.keyvault1[each.key].id
+ }
+
+ resource "azurerm_key_vault_secret" "password" {
+  for_each = var.keyvault
+   name         = each.value.key_password
+   value        = var.vm_password
+   key_vault_id = azurerm_key_vault.keyvault1[each.key].id
+ }

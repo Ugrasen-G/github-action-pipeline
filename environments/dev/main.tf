@@ -43,6 +43,8 @@ module "azurerm_key_vault" {
   depends_on = [module.azurerm_resource_group]
   source     = "../../modules/azurerm_key_vault"
   keyvault   = var.keyvault
+  vm_username = var.vm_username
+  vm_password = var.vm_password
 }
 
 module "azurerm_nat_gateway" {
@@ -51,11 +53,6 @@ module "azurerm_nat_gateway" {
   natgw      = var.natgw
 }
 
-module "azurerm_bastion_host" {
-  depends_on   = [module.azurerm_public_ip, module.azurerm_subnet]
-  source       = "../../modules/azurerm_bastion_host"
-  bastion_host = var.bastion_host
-}
 
 module "azurerm_public_ip" {
   depends_on      = [module.azurerm_subnet]
@@ -64,7 +61,7 @@ module "azurerm_public_ip" {
 }
 
 module "azurerm_network_interface" {
-  depends_on = [module.azurerm_subnet, module.azurerm_public_ip]
+  depends_on = [module.azurerm_subnet, module.azurerm_public_ip, module.azurerm_key_vault]
   source     = "../../modules/azurerm_network_interface"
   nic        = var.nic
 }
@@ -73,11 +70,17 @@ module "azurerm_linux_virtual_machine" {
   depends_on  = [module.azurerm_key_vault, module.azurerm_network_interface]
   source      = "../../modules/azurerm_linux_virtual_machine"
   linuxvm     = var.linuxvm
-  vm_password = var.vm_password
+  
 }
 
-module "azurerm_application_gateway" {
-  depends_on = [module.azurerm_linux_virtual_machine]
-  source     = "../../modules/azurerm_application_gateway"
-  appgw      = var.appgw
-}
+# module "azurerm_bastion_host" {
+#   depends_on   = [module.azurerm_public_ip, module.azurerm_subnet]
+#   source       = "../../modules/azurerm_bastion_host"
+#   bastion_host = var.bastion_host
+# }
+
+# module "azurerm_application_gateway" {
+#   depends_on = [module.azurerm_linux_virtual_machine]
+#   source     = "../../modules/azurerm_application_gateway"
+#   appgw      = var.appgw
+# }

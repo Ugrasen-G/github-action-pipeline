@@ -95,6 +95,7 @@ jobs:
       - name: Terraform Init
         run: terraform init
         env:
+          TF_VAR_vm_username: ${{ secrets.TF_VAR_VM_USERNAME }}
           TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}
 
       # 5. Terraform Validate
@@ -106,6 +107,7 @@ jobs:
         run: terraform plan -input=false -out=tfplan
         env:
           TF_LOG: INFO  
+          TF_VAR_vm_username: ${{ secrets.TF_VAR_VM_USERNAME }}
           TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}    
  
 
@@ -139,6 +141,7 @@ jobs:
       - name: Terraform Init
         run: terraform init
         env:
+          TF_VAR_vm_username: ${{ secrets.TF_VAR_VM_USERNAME }}
           TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}   
           
       # 5. Terraform Plan
@@ -147,6 +150,7 @@ jobs:
         run: terraform plan -input=false -out=tfplan
         env:
           TF_LOG: INFO  
+          TF_VAR_vm_username: ${{ secrets.TF_VAR_VM_USERNAME }}
           TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}    
 
       # 6. Terraform apply
@@ -155,6 +159,7 @@ jobs:
         run: terraform apply -input=false -auto-approve tfplan
         env:
           TF_LOG: INFO  
+          TF_VAR_vm_username: ${{ secrets.TF_VAR_VM_USERNAME }}
           TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}
 
 
@@ -188,6 +193,7 @@ jobs:
       - name: Terraform Init
         run: terraform init
         env:
+          TF_VAR_vm_username: ${{ secrets.TF_VAR_VM_USERNAME }}
           TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}     
       
       # 5. Terraform Destroy Plan
@@ -196,6 +202,7 @@ jobs:
         run: terraform plan -destroy -input=false -out=tfplan-destroy
         env:
           TF_LOG: INFO
+          TF_VAR_vm_username: ${{ secrets.TF_VAR_VM_USERNAME }}
           TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}      
  
       # 6. Terraform Destroy
@@ -204,5 +211,6 @@ jobs:
         run: terraform apply -input=false -auto-approve tfplan-destroy
         env:
           TF_LOG: INFO 
+          TF_VAR_vm_username: ${{ secrets.TF_VAR_VM_USERNAME }}
           TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }} 
      

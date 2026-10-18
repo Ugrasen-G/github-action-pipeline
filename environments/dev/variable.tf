@@ -18,8 +18,15 @@ variable "security_group" {
     nic_name            = list(string)
   }))
 }
-# variable "security_group_association" {}
+
 variable "security_rules" {}
+
+variable "vm_username" {
+  description = "vm username"
+  type        = string
+  sensitive   = true
+}
+
 variable "vm_password" {
   description = "vm password"
   type        = string
