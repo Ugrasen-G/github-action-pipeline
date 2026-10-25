@@ -167,8 +167,6 @@ keyvault = {
     sku_name            = "standard"
   }
 }
-# vm_username = "devopsadmin"
-# vm_password = "Admin@123456"
 
 natgw = {
   natgw1 = {
