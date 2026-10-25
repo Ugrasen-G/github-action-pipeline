@@ -167,8 +167,8 @@ keyvault = {
     sku_name            = "standard"
   }
 }
-vm_username = "devopsadmin"
-vm_password = "Admin@123456"
+# vm_username = "devopsadmin"
+# vm_password = "Admin@123456"
 
 natgw = {
   natgw1 = {
@@ -196,7 +196,16 @@ nic = {
   }
 }
 
-
+dns_zone = {
+  dns = {
+    name                = "axionsystem.com"
+    location            = "eastasia"
+    resource_group_name = "kp2"
+    record_name         = "netflix"
+    ttl                 = 300
+    records             = ["20.30.40.50"]
+  }
+}
 
 linuxvm = {
   vm1 = {

@@ -33,11 +33,6 @@ module "azurerm_network_security_rules" {
   security_rules = var.security_rules
 }
 
-# module "azurerm_subnet_network_security_group_association" {
-#   depends_on = [ module.azurerm_network_security_group ]
-#   source = "../../modules/azurerm_security_group_association"
-# security_group_association = var.security_group_association
-# }
 
 module "azurerm_key_vault" {
   depends_on = [module.azurerm_resource_group]
@@ -84,3 +79,9 @@ module "azurerm_linux_virtual_machine" {
 #   source     = "../../modules/azurerm_application_gateway"
 #   appgw      = var.appgw
 # }
+
+module "azurerm_dns_zone" {
+  depends_on = [module.azurerm_resource_group]
+  source     = "../../modules/azurerm_dns_zone"
+  dns_zone   = var.dns_zone
+}
