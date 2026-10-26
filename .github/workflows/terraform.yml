@@ -144,6 +144,10 @@ jobs:
           FIFTEEN_DAYS_FROM=$(date -u -d '15 days ago' +%Y-%m-%d)
           THIRTY_DAYS_FROM=$(date -u -d '30 days ago' +%Y-%m-%d)
 
+          get_cost() {
+            local FROM_DATE="$1"
+            local END_DATE="$30"
+
           BODY=$(jq -n \
             --arg from "$FROM_DATE" \
             --arg to "$TO_DATE" \
