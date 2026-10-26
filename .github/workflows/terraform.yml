@@ -109,7 +109,19 @@ jobs:
           TF_LOG: INFO  
           TF_VAR_vm_username: ${{ secrets.TF_VAR_VM_USERNAME }}
           TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}    
- 
+      
+         
+      - name: Install Infracost
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/infracost/infracost/master/scripts/install.sh | sh
+
+      - name: Estimate Infrastructure Cost
+        working-directory: ./terraform
+        env:
+          INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
+        run: |
+          infracost breakdown --path tfplan
+
       
       - name: Check Azure CLI
         run: |
@@ -122,6 +134,7 @@ jobs:
           az costmanagement --help
 
       - name: Azure Infrastructure Cost - Last 30 Days
+        working_directory: ./environments/dev
         shell: bash
         run: |
           SUB_ID=$(az account show --query id -o tsv)
