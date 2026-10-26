@@ -146,7 +146,7 @@ jobs:
 
           get_cost() {
             local FROM_DATE="$1"
-            local END_DATE="$2"
+            local END_DATE="$15"
 
           BODY=$(jq -n \
             --arg from "$FROM_DATE" \
@@ -156,7 +156,7 @@ jobs:
              timeframe: "Custom",
              timePeriod: {
                from: ($from + "T00:00:00Z"),
-               to: ($to + "T00:00:00Z")
+               to: ($to + "T23:59:59Z")
              },
              dataset: {
              granularity: "None",
