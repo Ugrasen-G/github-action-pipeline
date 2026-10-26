@@ -162,7 +162,7 @@ jobs:
              granularity: "None",
              aggregation: {
                totalCost: {
-                 name: "Cost",
+                 name: "PreTaxCost",
                  function: "Sum"
                 }
               }
