@@ -110,6 +110,20 @@ jobs:
           TF_VAR_vm_username: ${{ secrets.TF_VAR_VM_USERNAME }}
           TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}    
  
+      - name: Check Resource Groups
+        run: az group list --output table
+
+      - name: Check Infrastructure Resources
+        run: az resource list --output table
+
+      - name: Check Azure Cost
+        run: |
+          az costmanagement query \
+            --type ActualCost \
+            --timeframe TheLastMonth \
+            --dataset-aggregation '{"totalCost":{"name":"Cost","function":"Sum"}}' \
+            --output json
+
 
   terraform-apply:
     name: Terraform apply
