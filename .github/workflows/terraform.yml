@@ -110,19 +110,51 @@ jobs:
           TF_VAR_vm_username: ${{ secrets.TF_VAR_VM_USERNAME }}
           TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}    
  
-      - name: Check Resource Groups
-        run: az group list --output table
-
-      - name: Check Infrastructure Resources
-        run: az resource list --output table
-
-      - name: Check Azure Cost
+      
+      - name: Check Azure CLI
         run: |
-          az costmanagement query \
-            --type ActualCost \
-            --timeframe TheLastMonth \
-            --dataset-aggregation '{"totalCost":{"name":"Cost","function":"Sum"}}' \
+          az version
+          az extension list --output table
+
+      - name: Install Cost Management Extension
+        run: |
+          az extension add --name costmanagement --upgrade
+          az costmanagement --help
+
+      - name: Azure Infrastructure Cost - Last 30 Days
+        shell: bash
+        run: |
+          SUB_ID=$(az account show --query id -o tsv)
+          FROM_DATE=$(date -u -d '30 days ago' +%Y-%m-%d)
+          TO_DATE=$(date -u +%Y-%m-%d)
+
+          BODY=$(jq -n \
+            --arg from "$FROM_DATE" \
+            --arg to "$TO_DATE" \
+            '{
+             type: "ActualCost",
+             timeframe: "Custom",
+             timePeriod: {
+               from: ($from + "T00:00:00Z"),
+               to: ($to + "T00:00:00Z")
+             },
+             dataset: {
+             granularity: "None",
+             aggregation: {
+               totalCost: {
+                 name: "Cost",
+                 function: "Sum"
+                }
+              }
+            }
+          }')
+
+          az rest \
+            --method post \
+            --url "https://management.azure.com/subscriptions/${SUB_ID}/providers/Microsoft.CostManagement/query?api-version=2023-11-01" \
+            --body "$BODY" \
             --output json
+
 
 
   terraform-apply:
