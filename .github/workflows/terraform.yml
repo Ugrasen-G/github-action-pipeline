@@ -114,7 +114,6 @@ jobs:
         working-directory: ./environments/dev
         run: |
           terraform init
-          # -input=false lagane se pipeline password ke liye prompt nahi karegi
           terraform plan -out=tfplan -input=false
           terraform show -json tfplan > plan.json
         env:
