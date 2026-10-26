@@ -134,7 +134,7 @@ jobs:
           az costmanagement --help
 
       - name: Azure Infrastructure Cost - Last 30 Days
-        working_directory: ./environments/dev
+        working-directory: ./environments/dev
         shell: bash
         run: |
           SUB_ID=$(az account show --query id -o tsv)
