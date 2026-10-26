@@ -181,9 +181,9 @@ jobs:
           COST_30=$(get_cost "$THIRTY_DAYS_FROM" "$TO_DATE")
 
           # Agar return empty aaye to default value 0 show karega
-          echo "Last 24 Hours Cost: \${COST_1:-0}"
-          echo "Last 15 Days Cost:  \${COST_15:-0}"
-          echo "Last 30 Days Cost:  \${COST_30:-0}"  
+          echo "Last 24 Hours Cost: ${COST_1:-0}"
+          echo "Last 15 Days Cost:  ${COST_15:-0}"
+          echo "Last 30 Days Cost:  ${COST_30:-0}"  
 
 
   terraform-apply:
