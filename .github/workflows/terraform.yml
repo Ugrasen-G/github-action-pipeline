@@ -116,7 +116,7 @@ jobs:
       #     curl -fsSL https://raw.githubusercontent.com/infracost/infracost/master/scripts/install.sh | sh
 
       # - name: Estimate Infrastructure Cost
-      #   working-directory: ./terraform
+      #   working-directory: ./environments/dev
       #   env:
       #     INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
       #   run: |
@@ -146,7 +146,7 @@ jobs:
 
           get_cost() {
             local FROM_DATE="$1"
-            local END_DATE="$30"
+            local END_DATE="$2"
 
           BODY=$(jq -n \
             --arg from "$FROM_DATE" \
@@ -173,8 +173,17 @@ jobs:
             --method post \
             --url "https://management.azure.com/subscriptions/${SUB_ID}/providers/Microsoft.CostManagement/query?api-version=2023-11-01" \
             --body "$BODY" \
-            --output json
+            --query "properties.rows[0][0]" -o tsv
+          }
+          echo "=== Azure Cost Report ==="
+          COST_1=$(get_cost "$ONE_DAY_FROM" "$TO_DATE")
+          COST_15=$(get_cost "$FIFTEEN_DAYS_FROM" "$TO_DATE")
+          COST_30=$(get_cost "$THIRTY_DAYS_FROM" "$TO_DATE")
 
+          # Agar return empty aaye to default value 0 show karega
+          echo "Last 24 Hours Cost: \${COST_1:-0}"
+          echo "Last 15 Days Cost:  \${COST_15:-0}"
+          echo "Last 30 Days Cost:  \${COST_30:-0}"  
 
 
   terraform-apply:
