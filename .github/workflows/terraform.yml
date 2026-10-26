@@ -110,15 +110,29 @@ jobs:
           TF_VAR_vm_username: ${{ secrets.TF_VAR_VM_USERNAME }}
           TF_VAR_vm_password: ${{ secrets.TF_VAR_VM_PASSWORD }}    
       
-      - name: Checkout Code
-        uses: actions/checkout@v4
+      - name: Generate Terraform Plan JSON
+        run: |
+          terraform init
+          terraform plan -out=tfplan
+          terraform show -json tfplan > plan.json
 
-      - name: Estimate Cost with C3X
-        uses: c3x/actions/estimate@v1
+      - name: Estimate Cost with C3X (No API Key Needed)
+        uses: c3xdev/c3x@v0
         with:
-          path: ./environments/dev
-          format: table # Aap isko markdown ya json bhi kar sakte hain
+          path: plan.json
+
    
+      # - name: Generate Plan JSON
+      #   run: |
+      #     terraform plan -out=tfplan
+      #     terraform show -json tfplan > tfplan.json
+
+      # - name: Terracotta Cost & Security Check
+      #   uses: tryterracotta/terracotta-action@v1
+      #   with:
+      #     plan-path: tfplan.json
+      #     api-key: ${{ secrets.TERRACOTTA_API_KEY }}
+
       # - name: Install Infracost
       #   run: |
       #     curl -fsSL https://raw.githubusercontent.com/infracost/infracost/master/scripts/install.sh | sh
