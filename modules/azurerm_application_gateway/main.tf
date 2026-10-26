@@ -43,7 +43,7 @@ resource "azurerm_application_gateway" "appgw" {
 
   backend_address_pool {
     name = "frontend-subnet"
-    ip_addresses = [azurerm_network_interface.nic[each.key].ip_configuration[0].private_ip_address]
+    # ip_addresses = [azurerm_network_interface.nic[each.key].ip_configuration[0].private_ip_address]
 }
   
 
