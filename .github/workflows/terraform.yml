@@ -140,6 +140,9 @@ jobs:
           SUB_ID=$(az account show --query id -o tsv)
           FROM_DATE=$(date -u -d '30 days ago' +%Y-%m-%d)
           TO_DATE=$(date -u +%Y-%m-%d)
+          ONE_DAY_FROM=$(date -u -d '1 day ago' +%Y-%m-%d)
+          FIFTEEN_DAYS_FROM=$(date -u -d '15 days ago' +%Y-%m-%d)
+          THIRTY_DAYS_FROM=$(date -u -d '30 days ago' +%Y-%m-%d)
 
           BODY=$(jq -n \
             --arg from "$FROM_DATE" \
