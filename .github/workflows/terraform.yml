@@ -122,7 +122,6 @@ jobs:
           TF_VAR_vm_password: ${{ secrets.VM_PASSWORD }}
 
       - name: Estimate Cost with C3X (No API Key Needed)
-        working-directory: ./environments/dev
         uses: c3xdev/c3x@v0
         with:
           path: ./environments/dev/plan.json
