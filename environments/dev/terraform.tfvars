@@ -5,11 +5,11 @@ rgs = {
     location   = "eastasia"
     managed_by = "terraform"
     tags = {
-      environment = "pro"
+      environment = "dev"
     }
   }
   rg2 = {
-    name       = "kp3"
+    name       = "hub-rg"
     location   = "central india"
     managed_by = "terraform"
     tags = {
@@ -17,7 +17,7 @@ rgs = {
     }
   }
   rg3 = {
-    name       = "kp4"
+    name       = "app-service-rg"
     location   = "east us"
     managed_by = "terraform"
     tags = {
@@ -39,11 +39,23 @@ stg = {
 }
 
 vnet = {
-  vnet2 = {
+  vnet1 = {
     name                = "vnet1234"
     location            = "Eastasia"
     resource_group_name = "kp2"
     address_space       = ["10.1.0.0/16"]
+  }
+  vnet2 = {
+    name                = "hub-vnet"
+    location            = "central india"
+    resource_group_name = "hub-rg"
+    address_space       = ["10.2.0.0/16"]
+  }
+  vnet3 = {
+    name                = "app-service-vnet"
+    location            = "east us"
+    resource_group_name = "app-service-rg"
+    address_space       = ["10.3.0.0/16"]
   }
 }
 subnet = {
@@ -53,7 +65,6 @@ subnet = {
     virtual_network_name = "vnet1234"
     address_prefixes     = ["10.1.1.0/24"]
   }
-
   sub2 = {
     name                 = "Backend-subnet"
     resource_group_name  = "kp2"
@@ -66,11 +77,48 @@ subnet = {
     virtual_network_name = "vnet1234"
     address_prefixes     = ["10.1.3.0/24"]
   }
-  sub4 = {
+  hub-subnet1 = {
+    name                 = "frontend-subnet"
+    resource_group_name  = "hub-rg"
+    virtual_network_name = "hub-vnet"
+    address_prefixes     = ["10.2.1.0/24"]
+  }
+
+  hub-subnet2 = {
+    name                 = "Backend-subnet"
+    resource_group_name  = "hub-rg"
+    virtual_network_name = "hub-vnet"
+    address_prefixes     = ["10.2.2.0/24"]
+  }
+  hub-subnet3 = {
+    name                 = "appgwsubnet"
+    resource_group_name  = "hub-rg"
+    virtual_network_name = "hub-vnet"
+    address_prefixes     = ["10.2.3.0/24"]
+  }
+  hub-subnet4 = {
     name                 = "AzureBastionSubnet"
-    resource_group_name  = "kp2"
-    virtual_network_name = "vnet1234"
-    address_prefixes     = ["10.1.4.0/24"]
+    resource_group_name  = "hub-rg"
+    virtual_network_name = "hub-vnet"
+    address_prefixes     = ["10.2.4.0/24"]
+  }
+  app-service-subnet1 = {
+    name                 = "frontend-subnet"
+    resource_group_name  = "app-service-rg"
+    virtual_network_name = "app-service-vnet"
+    address_prefixes     = ["10.3.1.0/24"]
+  }
+  app-service-subnet2 = {
+    name                 = "Backend-subnet"
+    resource_group_name  = "app-service-rg"
+    virtual_network_name = "app-service-vnet"
+    address_prefixes     = ["10.3.2.0/24"]
+  }
+  app-service-subnet3 = {
+    name                 = "appgwsubnet"
+    resource_group_name  = "app-service-rg"
+    virtual_network_name = "app-service-vnet"
+    address_prefixes     = ["10.3.3.0/24"]
   }
 }
 
