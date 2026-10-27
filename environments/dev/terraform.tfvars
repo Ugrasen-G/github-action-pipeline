@@ -1,11 +1,27 @@
 
 rgs = {
-  rg2 = {
+  rg1 = {
     name       = "kp2"
     location   = "eastasia"
     managed_by = "terraform"
     tags = {
       environment = "pro"
+    }
+  }
+  rg2 = {
+    name       = "kp3"
+    location   = "central india"
+    managed_by = "terraform"
+    tags = {
+      environment = "dev"
+    }
+  }
+  rg3 = {
+    name       = "kp4"
+    location   = "east us"
+    managed_by = "terraform"
+    tags = {
+      environment = "dev"
     }
   }
 }
