@@ -68,20 +68,20 @@ module "azurerm_linux_virtual_machine" {
   
 }
 
-# module "azurerm_bastion_host" {
-#   depends_on   = [module.azurerm_public_ip, module.azurerm_subnet]
-#   source       = "../../modules/azurerm_bastion_host"
-#   bastion_host = var.bastion_host
-# }
+module "azurerm_bastion_host" {
+  depends_on   = [module.azurerm_public_ip, module.azurerm_subnet]
+  source       = "../../modules/azurerm_bastion_host"
+  bastion_host = var.bastion_host
+}
 
-# module "azurerm_application_gateway" {
-#   depends_on = [module.azurerm_linux_virtual_machine]
-#   source     = "../../modules/azurerm_application_gateway"
-#   appgw      = var.appgw
-# }
+module "azurerm_application_gateway" {
+  depends_on = [module.azurerm_linux_virtual_machine]
+  source     = "../../modules/azurerm_application_gateway"
+  appgw      = var.appgw
+}
 
-# module "azurerm_dns_zone" {
-#   depends_on = [module.azurerm_resource_group]
-#   source     = "../../modules/azurerm_dns_zone"
-#   dns_zone   = var.dns_zone
-# }
+module "azurerm_dns_zone" {
+  depends_on = [module.azurerm_resource_group]
+  source     = "../../modules/azurerm_dns_zone"
+  dns_zone   = var.dns_zone
+}
