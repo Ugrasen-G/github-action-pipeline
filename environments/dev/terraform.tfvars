@@ -77,12 +77,12 @@ subnet = {
     virtual_network_name = "vnet1234"
     address_prefixes     = ["10.1.3.0/24"]
   }
-  # sub4 = {
-  #   name                 = "AzureBastionSubnet"
-  #   resource_group_name  = "kp2"
-  #   virtual_network_name = "hub-vnet"
-  #   address_prefixes     = ["10.1.4.0/24"]
-  # }
+  sub4 = {
+    name                 = "AzureBastionSubnet"
+    resource_group_name  = "kp2"
+    virtual_network_name = "vnet1234"
+    address_prefixes     = ["10.1.4.0/24"]
+  }
   hub-subnet1 = {
     name                 = "frontend-subnet"
     resource_group_name  = "hub-rg"
