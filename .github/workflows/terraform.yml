@@ -128,28 +128,6 @@ jobs:
         with:
           path: ./environments/dev/plan.json
 
-   
-      # - name: Generate Plan JSON
-      #   run: |
-      #     terraform plan -out=tfplan
-      #     terraform show -json tfplan > tfplan.json
-
-      # - name: Terracotta Cost & Security Check
-      #   uses: tryterracotta/terracotta-action@v1
-      #   with:
-      #     plan-path: tfplan.json
-      #     api-key: ${{ secrets.TERRACOTTA_API_KEY }}
-
-      # - name: Install Infracost
-      #   run: |
-      #     curl -fsSL https://raw.githubusercontent.com/infracost/infracost/master/scripts/install.sh | sh
-
-      # - name: Estimate Infrastructure Cost
-      #   working-directory: ./environments/dev
-      #   env:
-      #     INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
-      #   run: |
-      #     infracost breakdown --path tfplan
 
 
   terraform-apply:
