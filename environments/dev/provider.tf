@@ -5,13 +5,13 @@ terraform {
       version = "5.9.0"
     }
   }
-  backend "azurerm" {
-    resource_group_name  = "Kp1"
-    storage_account_name = "krishn20262027"
-    container_name       = "container1"
-    key                  = "tfstate1"
-  }
-}
+#   backend "azurerm" {
+#     resource_group_name  = "Kp1"
+#     storage_account_name = "krishn20262027"
+#     container_name       = "container1"
+#     key                  = "tfstate1"
+#   }
+ }
 
 provider "azurerm" {
   features {}
