@@ -7,6 +7,7 @@ variable "nic" {}
 variable "natgw" {}
 variable "bastion_host" {}
 variable "linuxvm" {}
+variable "postgresql" {}
 variable "bastionpublicip" {}
 variable "appgw" {}
 variable "keyvault" {}

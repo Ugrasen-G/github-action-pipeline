@@ -65,7 +65,12 @@ module "azurerm_linux_virtual_machine" {
   depends_on  = [module.azurerm_key_vault, module.azurerm_network_interface]
   source      = "../../modules/azurerm_linux_virtual_machine"
   linuxvm     = var.linuxvm
-  
+}
+
+module "azurerm_postgresql_flexible_server" {
+  depends_on  = [module.azurerm_subnet, module.azurerm_private_dns_zone, module.azurerm_private_dns_zone_virtual_network_link]
+  source      = "../../modules/azurerm_postgresql"
+  postgresql  = var.postgresql
 }
 
 module "azurerm_bastion_host" {

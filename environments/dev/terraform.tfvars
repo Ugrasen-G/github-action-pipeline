@@ -8,22 +8,6 @@ rgs = {
       environment = "dev"
     }
   }
-  rg2 = {
-    name       = "hub-rg"
-    location   = "central india"
-    managed_by = "terraform"
-    tags = {
-      environment = "dev"
-    }
-  }
-  rg3 = {
-    name       = "app-service-rg"
-    location   = "east us"
-    managed_by = "terraform"
-    tags = {
-      environment = "dev"
-    }
-  }
 }
 
 stg = {
@@ -45,19 +29,8 @@ vnet = {
     resource_group_name = "kp2"
     address_space       = ["10.1.0.0/16"]
   }
-  vnet2 = {
-    name                = "hub-vnet"
-    location            = "central india"
-    resource_group_name = "hub-rg"
-    address_space       = ["10.2.0.0/16"]
-  }
-  vnet3 = {
-    name                = "app-service-vnet"
-    location            = "east us"
-    resource_group_name = "app-service-rg"
-    address_space       = ["10.3.0.0/16"]
-  }
 }
+
 subnet = {
   sub1 = {
     name                 = "frontend-subnet"
@@ -72,7 +45,7 @@ subnet = {
     address_prefixes     = ["10.1.2.0/24"]
   }
   sub3 = {
-    name                 = "appgwsubnet"
+    name                 = "Database-subnet"
     resource_group_name  = "kp2"
     virtual_network_name = "vnet1234"
     address_prefixes     = ["10.1.3.0/24"]
@@ -83,52 +56,13 @@ subnet = {
     virtual_network_name = "vnet1234"
     address_prefixes     = ["10.1.4.0/24"]
   }
-  hub-subnet1 = {
-    name                 = "frontend-subnet"
-    resource_group_name  = "hub-rg"
-    virtual_network_name = "hub-vnet"
-    address_prefixes     = ["10.2.1.0/24"]
-  }
-
-  hub-subnet2 = {
-    name                 = "Backend-subnet"
-    resource_group_name  = "hub-rg"
-    virtual_network_name = "hub-vnet"
-    address_prefixes     = ["10.2.2.0/24"]
-  }
-  hub-subnet3 = {
+  sub5 = {
     name                 = "appgwsubnet"
-    resource_group_name  = "hub-rg"
-    virtual_network_name = "hub-vnet"
-    address_prefixes     = ["10.2.3.0/24"]
-  }
-  hub-subnet4 = {
-    name                 = "AzureBastionSubnet"
-    resource_group_name  = "hub-rg"
-    virtual_network_name = "hub-vnet"
-    address_prefixes     = ["10.2.4.0/24"]
-  }
-  
-  app-service-subnet1 = {
-    name                 = "frontend-subnet"
-    resource_group_name  = "app-service-rg"
-    virtual_network_name = "app-service-vnet"
-    address_prefixes     = ["10.3.1.0/24"]
-  }
-  app-service-subnet2 = {
-    name                 = "Backend-subnet"
-    resource_group_name  = "app-service-rg"
-    virtual_network_name = "app-service-vnet"
-    address_prefixes     = ["10.3.2.0/24"]
-  }
-  app-service-subnet3 = {
-    name                 = "appgwsubnet"
-    resource_group_name  = "app-service-rg"
-    virtual_network_name = "app-service-vnet"
-    address_prefixes     = ["10.3.3.0/24"]
+    resource_group_name  = "kp2"
+    virtual_network_name = "vnet1234"
+    address_prefixes     = ["10.1.5.0/24"]
   }
 }
-
 
 security_group = {
   securitygroup1 = {
@@ -306,6 +240,23 @@ linuxvm = {
   }
 }
 
+postgresql = {
+  psql1 = {
+    name                 = "psqlflexibleserver"
+    resource_group_name  = "kp2"
+    location             = "eastasia"
+    version              = "12"
+    delegated_subnet_id  = "/subscriptions/0e7f3c8b-4d5e-4f6a-9c3b-1a2b3c4d5e6f/resourceGroups/kp2/providers/Microsoft.Network/virtualNetworks/vnet1234/subnets/Database-subnet"
+    private_dns_zone_id  = "/subscriptions/0e7f3c8b-4d5e-4f6a-9c3b-1a2b3c4d5e6f/resourceGroups/kp2/providers/Microsoft.Network/privateDnsZones/example.postgres.database.azure.com"
+    public_network_access_enabled = false
+    administrator_login           = "psqladmin"
+    administrator_password        = "H@Sh1CoR3!"
+    zone                          = "1"
+    storage_mb   = 32768
+    storage_tier = "P4"
+    sku_name     = "B_Standard_B1ms"
+  }
+}
 
 bastionpublicip = {
   publicip1 = {
