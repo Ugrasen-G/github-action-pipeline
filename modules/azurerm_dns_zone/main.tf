@@ -2,7 +2,7 @@ variable "dns_zone" {}
 
 # . Create a Public Azure DNS Zone
 # Use this for internet-facing domain routing
-resource "azurerm_dns_zone" "public_zone" {
+resource "azurerm_private_dns_zone" "zone" {
     for_each = var.dns_zone
   name                = each.value.name
   resource_group_name = each.value.resource_group_name
