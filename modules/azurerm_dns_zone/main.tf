@@ -9,14 +9,14 @@ resource "azurerm_private_dns_zone" "zone" {
 }
 
 # Example: Add an A Record to the Public DNS Zone
-resource "azurerm_dns_a_record" "web" {
-    for_each = var.dns_zone
-  name                = each.value.record_name
-  zone_name           = azurerm_private_dns_zone.zone[each.key].name
-  resource_group_name = each.value.resource_group_name
-  ttl                 = each.value.ttl
-  records             = each.value.records
-}
+# resource "azurerm_dns_a_record" "web" {
+#     for_each = var.dns_zone
+#   name                = each.value.record_name
+#   zone_name           = azurerm_private_dns_zone.zone[each.key].name
+#   resource_group_name = each.value.resource_group_name
+#   ttl                 = each.value.ttl
+#   records             = each.value.records
+# }
 
 # Example: Add a CNAME Record to the Public DNS Zone
 # resource "azurerm_dns_cname_record" "cdn" {
