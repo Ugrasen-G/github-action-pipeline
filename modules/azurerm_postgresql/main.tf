@@ -35,7 +35,7 @@ data "azurerm_private_dns_zone" "zone" {
   resource_group_name = each.value.resource_group_name
 }
 
-data "azurerm_subnet" "Database-subnet" {
+data "azurerm_subnet" "Database_subnet" {
      for_each = var.postgresql
      name =each.value.subnet_name
   virtual_network_name = each.value.virtual_network_name
