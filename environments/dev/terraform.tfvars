@@ -130,6 +130,19 @@ security_rules = {
     destination_address_prefix  = "*"
     network_security_group_name = "NSG1"
   }
+  PostgreSQL = {
+    resource_group_name         = "kp2"
+    name                        = "nsg-rule4"
+    priority                    = 140
+    direction                   = "Inbound"
+    access                      = "Allow"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "5432"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    network_security_group_name = "NSG1"
+  }
 
   # Outbound Rules
 
