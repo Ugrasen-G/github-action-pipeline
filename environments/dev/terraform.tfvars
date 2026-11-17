@@ -201,10 +201,10 @@ nic = {
 
 dns_zone = {
   dns = {
-    name                = "axionsystem.com"
+    name                = "axionsystem.postgres.database.azure.com"
     location            = "eastasia"
     resource_group_name = "kp2"
-    record_name         = "netflix"
+    record_name         = "database"
     ttl                 = 300
     records             = ["20.30.40.50"]
   }
@@ -244,7 +244,7 @@ postgresql = {
   psql1 = {
     name                 = "my-postgresq-server"
     subnet_name          = "Database-subnet"
-    dns_zone_name       = "axionsystem.com"
+    dns_zone_name       = "axionsystem.postgres.database.azure.com"
     virtual_network_name = "vnet1234"
     resource_group_name  = "kp2"
     location             = "eastasia"
