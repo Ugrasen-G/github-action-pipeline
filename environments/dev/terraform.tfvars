@@ -242,7 +242,7 @@ linuxvm = {
 
 postgresql = {
   psql1 = {
-    name                 = "psqlflexibleserver"
+    name                 = "my-postgresq-server"
     subnet_name          = "Database-subnet"
     dns_zone_name       = "axionsystem.com"
     virtual_network_name = "vnet1234"
