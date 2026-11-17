@@ -192,6 +192,7 @@ nic = {
   }
   nic2 = {
     name                 = "backendvmnic"
+    public_ip_name       = "backendvmpublicip"
     resource_group_name  = "kp2"
     location             = "eastasia"
     virtual_network_name = "vnet1234"
@@ -270,6 +271,12 @@ bastionpublicip = {
   }
   publicip2 = {
     name                = "appgwpublicip1"
+    location            = "eastasia"
+    resource_group_name = "kp2"
+    allocation_method   = "Static"
+  }
+  publicip3 = {
+    name                = "backendvmpublicip"
     location            = "eastasia"
     resource_group_name = "kp2"
     allocation_method   = "Static"
