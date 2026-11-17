@@ -184,6 +184,7 @@ natgw = {
 nic = {
   nic1 = {
     name                 = "frontendvmnic"
+    public_ip_name       = "frontendvmpublicip"
     resource_group_name  = "kp2"
     location             = "eastasia"
     virtual_network_name = "vnet1234"
@@ -263,20 +264,26 @@ postgresql = {
 }
 
 bastionpublicip = {
-  publicip1 = {
-    name                = "Bastionpublicip1"
-    location            = "eastasia"
-    resource_group_name = "kp2"
-    allocation_method   = "Static"
-  }
-  publicip2 = {
-    name                = "appgwpublicip1"
-    location            = "eastasia"
-    resource_group_name = "kp2"
-    allocation_method   = "Static"
-  }
+  # publicip1 = {
+  #   name                = "Bastionpublicip1"
+  #   location            = "eastasia"
+  #   resource_group_name = "kp2"
+  #   allocation_method   = "Static"
+  # }
+  # publicip2 = {
+  #   name                = "appgwpublicip1"
+  #   location            = "eastasia"
+  #   resource_group_name = "kp2"
+  #   allocation_method   = "Static"
+  # }
   publicip3 = {
     name                = "backendvmpublicip"
+    location            = "eastasia"
+    resource_group_name = "kp2"
+    allocation_method   = "Static"
+  }
+  publicip4 = {
+    name                = "frontendvmpublicip"
     location            = "eastasia"
     resource_group_name = "kp2"
     allocation_method   = "Static"
